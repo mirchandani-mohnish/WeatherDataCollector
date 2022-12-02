@@ -13,9 +13,9 @@ void setup() {
 }
   
 void loop() {
-    Serial.print("Temperature = ");
-    Serial.print(bmp.readTemperature());
-    Serial.println(" *C");
+    // Serial.print("Temperature = ");
+    // Serial.print(bmp.readTemperature());
+    // Serial.println(" *C");
     
     Serial.print("Pressure = ");
     Serial.print(bmp.readPressure());
