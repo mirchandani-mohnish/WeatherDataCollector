@@ -19,6 +19,7 @@ void setup() {
 
 void loop() {
   
+ 
   // try to parse packet
   int packetSize = LoRa.parsePacket();
   if (packetSize) {

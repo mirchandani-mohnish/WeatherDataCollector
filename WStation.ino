@@ -4,11 +4,11 @@
 #include <Wire.h>
 #include <Wire.h>
 #include <Adafruit_BMP085.h>
-#define seaLevelPressure_hPa 1013.25
 
 
-  
 
+
+#define seaLevelPressure_hPa 1013.25 // 
 #define dht_apin A0 // DHT pin 
 #define MQ_apin A1 // MQ sensor Pin 
 #define BMP_apin A2 // BMP sensor Pin 
@@ -41,7 +41,6 @@ void loop(){
   
     // DHT Sensor
     DHT.read11(dht_apin);
-    
     Serial.print("Current humidity = ");
     Serial.print(DHT.humidity);
     Serial.print("%");
@@ -84,10 +83,19 @@ void loop(){
     Serial.print("Real altitude = ");
     Serial.print(bmp.readAltitude(seaLevelPressure_hPa * 100));
     realAltVal = bmp.readAltitude(seaLevelPressure_hPa * 100);
-    Serial.println(" meters");
+    Serial.println("meters");
 
 
 
+    // uv value 
+     uvValue = analogRead(uv_apin);
+    sensorVoltage = uvValue/1024*5.0;
+    Serial.print("sensor reading = ");
+    Serial.print(uvValue);
+    Serial.print("        sensor voltage = ");
+    Serial.print(sensorVoltage);
+    Serial.println(" V");
+    delay(1000);
 
 
     // Lora Sender 
@@ -105,7 +113,5 @@ void loop(){
     Lora.print("End Packet")
     LoRa.endPacket();
    
-
-
 
 }

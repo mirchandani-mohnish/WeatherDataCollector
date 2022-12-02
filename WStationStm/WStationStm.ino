@@ -1,5 +1,5 @@
 #include <DHTStable.h>
-#include <SPI.h>
+//#include <SPI.h>
 #include <LoRa.h>
 #include <Wire.h>
 #include <Wire.h>
@@ -16,7 +16,9 @@
 
 #define dht_apin A0 // DHT pin 
 #define MQ_apin A1 // MQ sensor Pin 
-#define BMP_apin A2 // BMP sensor Pin 
+#define BMP_apin A3 // BMP sensor Pin 
+#define uv_apin A4 // UV sensor pin 
+
 
 
 
@@ -32,16 +34,19 @@ int MQSensorValue = 0;
 int pressureVal = 0;
 int altitudeVal = 0;
 int realAltVal = 0;
-
-
+int uvVal = 0;
+int uvSensorVoltage = 0;
+bool LoraFail = false;
 void setup(){
  
   Serial.begin(9600);
   delay(500);//Delay to let system boot
   delay(1000);
   //Wait before accessing Sensor
+  LoRa.begin(433E6);
     if (!LoRa.begin(433E6)) {
         Serial.println("Starting LoRa failed!");
+        LoraFail = true;
     }
      if (!bmp.begin()) {
   Serial.println("Could not find a valid BMP085 sensor, check wiring!");
@@ -99,9 +104,20 @@ void loop(){
    Serial.println(" meters");
 
 
+     // uv value 
+     uvVal = analogRead(uv_apin);
+    uvSensorVoltage = uvVal/1024*5.0;
+    Serial.print("sensor reading = ");
+    Serial.print(uvVal);
+    Serial.print("        sensor voltage = ");
+    Serial.print(uvSensorVoltage);
+    Serial.println(" V");
+    delay(1000);
+    delay(1000);
+    Serial.println("------------------- end of reading -----------------------");
 
-
-
+    if(!LoraFail){
+      Serial.println("Lora packet sent!!!");
     // Lora Sender 
     LoRa.beginPacket();
     LoRa.print("Packet Begin");
@@ -116,7 +132,9 @@ void loop(){
     LoRa.print(realAltVal);
     LoRa.print("End Packet");
     LoRa.endPacket();
-   
+    }else{
+      Serial.println("Lora packet not sent!!!");
+    }
 
 
 
