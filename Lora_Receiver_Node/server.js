@@ -1,14 +1,27 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
+const weather = require("./models/weather");
 
 const app = express();
 app.set('view engine', 'ejs');
 
 
 app.get("/", (req, res) => {
+    weather.find({}).then((res) => {console.log(res);})
     res.render("home.ejs")
 })
+
+
+app.post("/data", (req,res) => { 
+    const weatherData = req.body.weatherData;
+    
+
+    weather.save()
+})
+
+
+
+
 
 mongoose.connect('mongodb+srv://admin:admin@cluster0.vkoedeg.mongodb.net/?retryWrites=true&w=majority',
   {

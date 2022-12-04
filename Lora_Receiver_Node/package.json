@@ -11,6 +11,7 @@
   "dependencies": {
     "@serialport/list": "^10.5.0",
     "@serialport/parser-readline": "^10.5.0",
+    "axios": "^1.2.0",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
     "mongoose": "^5.8.0",
