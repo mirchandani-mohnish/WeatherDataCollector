@@ -1,0 +1,16 @@
+{
+  "name": "lora_receiver_node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Lora_Receiver_Client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@serialport/list": "^10.5.0",
+    "@serialport/parser-readline": "^10.5.0",
+    "serialport": "^10.5.0"
+  }
+}
