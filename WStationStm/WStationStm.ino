@@ -1,3 +1,4 @@
+
 #include <DHTStable.h>
 //#include <SPI.h>
 #include <LoRa.h>
@@ -37,25 +38,42 @@ int realAltVal = 0;
 int uvVal = 0;
 int uvSensorVoltage = 0;
 bool LoraFail = false;
+
+
 void setup(){
  
   Serial.begin(9600);
   delay(500);//Delay to let system boot
-  delay(1000);
+  
   //Wait before accessing Sensor
+  Serial.println("LORA starting...");
   LoRa.begin(433E6);
+  
     if (!LoRa.begin(433E6)) {
         Serial.println("Starting LoRa failed!");
         LoraFail = true;
+
+        while(LoraFail){
+           LoRa.begin(433E6);
+           Serial.println("Reattempting Lora Restart, please check connection");
+           if(LoRa.begin(433E6)){
+            LoraFail = false;
+            break;
+           }
+        }
     }
-     if (!bmp.begin()) {
-  Serial.println("Could not find a valid BMP085 sensor, check wiring!");
-  
-  }
+//    bmp.begin();
+//     Serial.println("Setup done");
+//     if (!bmp.begin()) {
+//  Serial.println("Could not find a valid BMP085 sensor, check wiring!");
+//  
+//  }
+ 
 }
  
 void loop(){
-  
+
+    Serial.println("~~~~~New Loop Start~~~~~");
     // DHT Sensor
     DHT.read11(dht_apin);
     
@@ -75,33 +93,33 @@ void loop(){
     Serial.print("AirQua=");
     Serial.print(MQSensorValue);               // prints the value read
     Serial.println(" PPM");
-    delay(2000);//Wait 2 seconds before accessing sensor again.
+    //delay(2000);//Wait 2 seconds before accessing sensor again.
     
 
 
   //bmp 180 
-  // pressure value 
-   Serial.print("Pressure = ");
-   Serial.print(bmp.readPressure());
-   pressureVal = bmp.readPressure();
-   Serial.println(" Pa");
-
-   // altitude value 
-   Serial.print("Altitude = ");
-   Serial.print(bmp.readAltitude());
-   altitudeVal = bmp.readAltitude();
-   Serial.println(" meters");
-
-   // Serial.print("Pressure at sealevel (calculated) = ");
-   // Serial.print(bmp.readSealevelPressure());
-   // seaLevelPressure
-   // Serial.println("Pa");
-
-   // real altitude value 
-   Serial.print("Real altitude = ");
-   Serial.print(bmp.readAltitude(seaLevelPressure_hPa * 100));
-   realAltVal = bmp.readAltitude(seaLevelPressure_hPa * 100);
-   Serial.println(" meters");
+//  // pressure value 
+//   Serial.print("Pressure = ");
+//   Serial.print(bmp.readPressure());
+//   pressureVal = bmp.readPressure();
+//   Serial.println(" Pa");
+//
+//   // altitude value 
+//   Serial.print("Altitude = ");
+//   Serial.print(bmp.readAltitude());
+//   altitudeVal = bmp.readAltitude();
+//   Serial.println(" meters");
+//
+//   // Serial.print("Pressure at sealevel (calculated) = ");
+//   // Serial.print(bmp.readSealevelPressure());
+//   // seaLevelPressure
+//   // Serial.println("Pa");
+//
+//   // real altitude value 
+//   Serial.print("Real altitude = ");
+//   Serial.print(bmp.readAltitude(seaLevelPressure_hPa * 100));
+//   realAltVal = bmp.readAltitude(seaLevelPressure_hPa * 100);
+//   Serial.println(" meters");
 
 
      // uv value 
@@ -112,14 +130,15 @@ void loop(){
     Serial.print("        sensor voltage = ");
     Serial.print(uvSensorVoltage);
     Serial.println(" V");
-    delay(1000);
-    delay(1000);
+//    delay(1000);
+//    delay(1000);
     Serial.println("------------------- end of reading -----------------------");
 
     if(!LoraFail){
-      Serial.println("Lora packet sent!!!");
+      
     // Lora Sender 
     LoRa.beginPacket();
+    LoRa.print("Just something");
     LoRa.print("Packet Begin");
     LoRa.print(DHTHumVal);
     LoRa.print("//");
@@ -132,10 +151,11 @@ void loop(){
     LoRa.print(realAltVal);
     LoRa.print("End Packet");
     LoRa.endPacket();
+
+    Serial.println("Lora packet sent!!!");
     }else{
       Serial.println("Lora packet not sent!!!");
     }
-
-
-
+    delay(500);
+    Serial.println("Execution Complete -----------------");
 }
