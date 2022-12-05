@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
   const { Schema } = mongoose;
 
   const weatherSchema = new Schema({
-    date: {type: Date}, // String is shorthand for {type: String}
+    date: {type: Date, default: Date.now}, // String is shorthand for {type: String}
     temperature: Number,
     pressure:   Number,
     humidity: Number,

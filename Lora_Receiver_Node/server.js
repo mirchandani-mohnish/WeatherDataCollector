@@ -23,15 +23,15 @@ app.post("/data", (req,res) => {
         console.log(element);
         console.log(+element);
     });
-    // const newWeatherPacket =  new weather({
-    //     temperature: +weatherDataArray[0], 
-    //     humidity: +weatherDataArray[1],
-    //     pressure: +weatherDataArray[2],
-    //     altitude: +weatherDataArray[3],
-    //     aqi: +weatherDataArray[4]
-    // })
+    const newWeatherPacket =  new weather({
+        temperature: +weatherDataArray[1], 
+        humidity: +weatherDataArray[2],
+        pressure: +weatherDataArray[3],
+        altitude: +weatherDataArray[4],
+        aqi: +weatherDataArray[5]
+    });
 
-    // newWeatherPacket.save((e) => {console.log(e)});
+    newWeatherPacket.save((e) => {console.log(e)});
     res.send("success");
     // weather.save(weatherData)
 })
