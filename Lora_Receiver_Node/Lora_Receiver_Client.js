@@ -14,9 +14,15 @@ port.on("open", () => {
   console.log('serial port open');
 });
 
-parser.on('data', (data) =>{
-  console.log('got word from arduino:', data);
-//   axios.post("http://localhost:3000/data").then(() => console.log("posted weather data")).catch((e) => console.log(e));
+parser.on('data', async (receivedData) =>{
+  console.log(receivedData);
+  // axios({
+  //   method: 'post',
+  //   url: 'http://localhost:3000/data',
+  //   body: receivedData
+  // })
+  
+  axios.post("http://localhost:3000/data", {receivedData: JSON.stringify(receivedData)}).then((response) => console.log("posted weather data")).catch((e) => console.log(e));
 });
 
 // }

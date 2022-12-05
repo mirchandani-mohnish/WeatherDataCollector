@@ -1,10 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const weather = require("./models/weather");
-
+const bodyParser = require("body-parser");
 const app = express();
 app.set('view engine', 'ejs');
 
+
+app.use(bodyParser.json()) // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 app.get("/", (req, res) => {
     weather.find({}).then((res) => {console.log(res);})
@@ -13,10 +16,10 @@ app.get("/", (req, res) => {
 
 
 app.post("/data", (req,res) => { 
-    const weatherData = req.body.weatherData;
-    
-
-    weather.save()
+    const weatherData = req;
+    console.log(req.body);
+    res.send("success");
+    // weather.save(weatherData)
 })
 
 
