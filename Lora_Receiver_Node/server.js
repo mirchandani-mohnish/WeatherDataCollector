@@ -16,8 +16,22 @@ app.get("/", (req, res) => {
 
 
 app.post("/data", (req,res) => { 
-    const weatherData = req;
-    console.log(req.body);
+    const weatherData = req.body;
+    console.log(weatherData);
+    const weatherDataArray = weatherData.receivedData.split("//");
+    weatherDataArray.forEach(element => {
+        console.log(element);
+        console.log(+element);
+    });
+    // const newWeatherPacket =  new weather({
+    //     temperature: +weatherDataArray[0], 
+    //     humidity: +weatherDataArray[1],
+    //     pressure: +weatherDataArray[2],
+    //     altitude: +weatherDataArray[3],
+    //     aqi: +weatherDataArray[4]
+    // })
+
+    // newWeatherPacket.save((e) => {console.log(e)});
     res.send("success");
     // weather.save(weatherData)
 })

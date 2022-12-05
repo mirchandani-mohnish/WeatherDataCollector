@@ -15,12 +15,8 @@ port.on("open", () => {
 });
 
 parser.on('data', async (receivedData) =>{
-  console.log(receivedData);
-  // axios({
-  //   method: 'post',
-  //   url: 'http://localhost:3000/data',
-  //   body: receivedData
-  // })
+  console.log(JSON.stringify(receivedData));
+ 
   
   axios.post("http://localhost:3000/data", {receivedData: JSON.stringify(receivedData)}).then((response) => console.log("posted weather data")).catch((e) => console.log(e));
 });
