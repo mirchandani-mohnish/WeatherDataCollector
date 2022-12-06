@@ -1,8 +1,7 @@
 
 #include <DHTStable.h>
-//#include <SPI.h>
+#include <SPI.h>
 #include <LoRa.h>
-#include <Wire.h>
 #include <Wire.h>
 #include <Adafruit_BMP085.h>
 #define seaLevelPressure_hPa 1013.25
@@ -17,8 +16,8 @@
 
 #define dht_apin A0 // DHT pin 
 #define MQ_apin A1 // MQ sensor Pin 
-#define BMP_apin A3 // BMP sensor Pin 
-#define uv_apin A4 // UV sensor pin 
+#define BMP_apin A4 // BMP sensor Pin 
+#define uv_apin A3 // UV sensor pin 
 
 
 
@@ -62,12 +61,12 @@ void setup(){
            }
         }
     }
-//    bmp.begin();
-//     Serial.println("Setup done");
-//     if (!bmp.begin()) {
-//  Serial.println("Could not find a valid BMP085 sensor, check wiring!");
-//  
-//  }
+    bmp.begin();
+     Serial.println("Setup done");
+     if (!bmp.begin()) {
+  Serial.println("Could not find a valid BMP085 sensor, check wiring!");
+  
+  }
  
 }
  
@@ -97,29 +96,29 @@ void loop(){
     
 
 
-  //bmp 180 
-//  // pressure value 
-//   Serial.print("Pressure = ");
-//   Serial.print(bmp.readPressure());
-//   pressureVal = bmp.readPressure();
-//   Serial.println(" Pa");
-//
-//   // altitude value 
-//   Serial.print("Altitude = ");
-//   Serial.print(bmp.readAltitude());
-//   altitudeVal = bmp.readAltitude();
-//   Serial.println(" meters");
-//
-//   // Serial.print("Pressure at sealevel (calculated) = ");
-//   // Serial.print(bmp.readSealevelPressure());
-//   // seaLevelPressure
-//   // Serial.println("Pa");
-//
-//   // real altitude value 
-//   Serial.print("Real altitude = ");
-//   Serial.print(bmp.readAltitude(seaLevelPressure_hPa * 100));
-//   realAltVal = bmp.readAltitude(seaLevelPressure_hPa * 100);
-//   Serial.println(" meters");
+//  bmp 180 
+  // pressure value 
+   Serial.print("Pressure = ");
+   Serial.print(bmp.readPressure());
+   pressureVal = bmp.readPressure();
+   Serial.println(" Pa");
+
+   // altitude value 
+   Serial.print("Altitude = ");
+   Serial.print(bmp.readAltitude());
+   altitudeVal = bmp.readAltitude();
+   Serial.println(" meters");
+
+   // Serial.print("Pressure at sealevel (calculated) = ");
+   // Serial.print(bmp.readSealevelPressure());
+   // seaLevelPressure
+   // Serial.println("Pa");
+
+   // real altitude value 
+   Serial.print("Real altitude = ");
+   Serial.print(bmp.readAltitude(seaLevelPressure_hPa * 100));
+   realAltVal = bmp.readAltitude(seaLevelPressure_hPa * 100);
+   Serial.println(" meters");
 
 
      // uv value 
@@ -138,8 +137,8 @@ void loop(){
       
     // Lora Sender 
     LoRa.beginPacket();
-    LoRa.print("Just something");
-    LoRa.print("Packet Begin");
+//    LoRa.print("Just something");
+    LoRa.print("00//");
     LoRa.print(DHTHumVal);
     LoRa.print("//");
     LoRa.print(DHTTemp);
@@ -149,7 +148,7 @@ void loop(){
     LoRa.print(altitudeVal);
     LoRa.print("//");
     LoRa.print(realAltVal);
-    LoRa.print("End Packet");
+    LoRa.print("//00");
     LoRa.endPacket();
 
     Serial.println("Lora packet sent!!!");

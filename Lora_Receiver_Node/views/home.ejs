@@ -13,18 +13,61 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-  
-  const ctx = document.getElementById('myChart');
+  let keys;
+  let temperature =[];
+  let altitude =[];
+  let aqi =[];
+  let humidity =[];
+  let pressure =[];
+  let date =[];
+  async function fetchData(){
 
+    let data = await fetch('http://localhost:3000/w').then(res => res.json())
+     keys = Object.keys(data.weatherData);
+     for (let i in keys){
+      temperature.push(data.weatherData[keys[i]].temperature)
+      altitude.push(data.weatherData[keys[i]].altitude)
+      aqi.push(data.weatherData[keys[i]].aqi)
+      humidity.push(data.weatherData[keys[i]].humidity)
+      pressure.push(data.weatherData[keys[i]].pressure)
+      let d= data.weatherData[keys[i]].date.split('T')[0];
+      let t = data.weatherData[keys[i]].date.split('T')[1].split('.')[0];
+      date.push(d + " || " + t)
+      // console.log(d+" "+t)
+     }
+     
+     chart();
+    }
+    fetchData()
+    function chart(){
+  const ctx = document.getElementById('myChart');
   new Chart(ctx, {
-    type: 'bar',
+    type: 'line',
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      
+      labels:date,
       datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        label: 'Temperature',
+        
+        data: temperature,
         borderWidth: 1
-      }]
+      }, {
+          label: 'pressure',
+          data: pressure,
+          borderWidth: 1
+        }, {
+          label: 'humidity',
+          data: humidity,
+          borderWidth: 1
+        }, {
+          label: 'aqi',
+          data: aqi,
+          borderWidth: 1
+        }, {
+          label: 'altitude',
+          data: altitude,
+          borderWidth: 1
+        }]
     },
     options: {
       scales: {
@@ -34,11 +77,9 @@
       }
     }
   });
-
-  // API
-  // const data = fetch('http://localhost:3000/data')
-  //   .then(res => res.json())
-  //   .then(data => console.log(data))
+    }
+    
 </script>
+    
 </body>
 </html>
