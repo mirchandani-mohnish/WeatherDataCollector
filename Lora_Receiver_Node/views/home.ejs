@@ -5,70 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    
+    </head>
+<body>
+<div>
+  <canvas id="myChart"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
- var data = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-    datasets: [{
-      label: "Dataset #1",
-      backgroundColor: "rgba(255,99,132,0.2)",
-      borderColor: "rgba(255,99,132,1)",
-      borderWidth: 2,
-      hoverBackgroundColor: "rgba(255,99,132,0.4)",
-      hoverBorderColor: "rgba(255,99,132,1)",
-      data: [65, 59, 20, 81, 56, 55, 40],
-    }]
-  };
   
-  var options = {
-    maintainAspectRatio: false,
-    scales: {
-      y: {
-        stacked: true,
-        grid: {
-          display: true,
-          color: "rgba(255,99,132,0.2)"
-        }
-      },
-      x: {
-        grid: {
-          display: false
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
         }
       }
     }
-  };
-  
-  new Chart('chart', {
-    type: 'bar',
-    options: options,
-    data: data
   });
-  </script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-    <style>
-    body {  
-  background: #1D1F20;
-  padding: 16px;
-}
 
-canvas {
-  border: 1px dotted red;
-}
-
-.chart-container {
-  position: relative;
-  margin: auto;
-  height: 80vh;
-  width: 80vw;
-}
-
-</style>
-<div class="chart-container">
-    <canvas id="chart"></canvas>
-</div>
-
-
+  // API
+  // const data = fetch('http://localhost:3000/data')
+  //   .then(res => res.json())
+  //   .then(data => console.log(data))
+</script>
 </body>
 </html>
