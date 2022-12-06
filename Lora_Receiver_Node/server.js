@@ -9,9 +9,10 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
-app.get("/", (req, res) => {
-    weather.find({}).then((res) => {console.log(res);})
-    res.render("home.ejs")
+app.get("/", async (req, res) => {
+    let weatherData;
+    await weather.find({}).then((res) => {console.log(res); weatherData = res;})
+    res.render("home.ejs", {weatherData: weatherData});
 })
 
 

@@ -7,7 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    This is the home page
+    <ul> 
+        <% for (var i = 0; i < 10 ; i++) { %>
+            <li> <%= weatherData[i].temperature %> </li>
+        <% } %>
+    </ul>
     
 </body>
 </html>
