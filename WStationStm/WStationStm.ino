@@ -35,9 +35,9 @@ int pressureVal = 0;
 int altitudeVal = 0;
 int realAltVal = 0;
 int uvVal = 0;
-int uvSensorVoltage = 0;
 bool LoraFail = false;
-
+float uvSensorVoltage = 0;
+float uvIndex = 0;
 
 void setup(){
  
@@ -76,12 +76,12 @@ void loop(){
     // DHT Sensor
     DHT.read11(dht_apin);
     
-    Serial.print("Current humidity = ");
-    Serial.print(DHT.getHumidity());
-    Serial.print("%");
-    Serial.print("temperature = ");
-    Serial.print(DHT.getTemperature()); 
-    Serial.println("C  ");
+//    Serial.print("Current humidity = ");
+//    Serial.print(DHT.getHumidity());
+//    Serial.print("%");
+//    Serial.print("temperature = ");
+//    Serial.print(DHT.getTemperature()); 
+//    Serial.println("C  ");
     DHTHumVal = DHT.getHumidity();
     DHTTemp = DHT.getTemperature(); 
 
@@ -89,25 +89,25 @@ void loop(){
     
     // MQ sensor 
     MQSensorValue = analogRead(MQ_apin);       // read analog input pin 0
-    Serial.print("AirQua=");
-    Serial.print(MQSensorValue);               // prints the value read
-    Serial.println(" PPM");
+//    Serial.print("AirQua=");
+//    Serial.print(MQSensorValue);               // prints the value read
+//    Serial.println(" PPM");
     //delay(2000);//Wait 2 seconds before accessing sensor again.
     
 
 
 //  bmp 180 
   // pressure value 
-   Serial.print("Pressure = ");
-   Serial.print(bmp.readPressure());
+//   Serial.print("Pressure = ");
+//   Serial.print(bmp.readPressure());
    pressureVal = bmp.readPressure();
-   Serial.println(" Pa");
+//   Serial.println(" Pa");
 
    // altitude value 
-   Serial.print("Altitude = ");
-   Serial.print(bmp.readAltitude());
+//   Serial.print("Altitude = ");
+//   Serial.print(bmp.readAltitude());
    altitudeVal = bmp.readAltitude();
-   Serial.println(" meters");
+//   Serial.println(" meters");
 
    // Serial.print("Pressure at sealevel (calculated) = ");
    // Serial.print(bmp.readSealevelPressure());
@@ -115,24 +115,38 @@ void loop(){
    // Serial.println("Pa");
 
    // real altitude value 
-   Serial.print("Real altitude = ");
-   Serial.print(bmp.readAltitude(seaLevelPressure_hPa * 100));
+//   Serial.print("Real altitude = ");
+//   Serial.print(bmp.readAltitude(seaLevelPressure_hPa * 100));
    realAltVal = bmp.readAltitude(seaLevelPressure_hPa * 100);
-   Serial.println(" meters");
+//   Serial.println(" meters");
 
 
      // uv value 
      uvVal = analogRead(uv_apin);
     uvSensorVoltage = uvVal/1024*5.0;
-    Serial.print("sensor reading = ");
-    Serial.print(uvVal);
-    Serial.print("        sensor voltage = ");
-    Serial.print(uvSensorVoltage);
-    Serial.println(" V");
+//    Serial.print("sensor reading = ");
+//    Serial.print(uvVal);
+//    Serial.print("        sensor voltage = ");
+//    Serial.print(uvSensorVoltage);
+//    Serial.println(" V");
+////    delay(1000);
 //    delay(1000);
-//    delay(1000);
-    Serial.println("------------------- end of reading -----------------------");
-
+//    Serial.println("------------------- end of reading -----------------------");
+ Serial.print("00//");
+    Serial.print(DHTTemp);
+    Serial.print("//");
+    Serial.print(DHTHumVal);
+    Serial.print("//");
+    Serial.print(pressureVal);
+    Serial.print("//");
+//    Serial.print(altitudeVal);
+//    Serial.print("//");
+    Serial.print(realAltVal);
+    Serial.print("//");
+    Serial.print(MQSensorValue);
+    Serial.print("//");
+    Serial.print(uvIndex);
+    Serial.print("//00");
     if(!LoraFail){
       
     // Lora Sender 

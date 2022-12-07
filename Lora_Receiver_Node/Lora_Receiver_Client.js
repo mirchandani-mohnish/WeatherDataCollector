@@ -2,7 +2,7 @@ const {SerialPort} = require('serialport');
 const { ReadlineParser } = require('@serialport/parser-readline');
 const axios = require("axios");
 
-const port = new SerialPort({path: 'COM9', baudRate: 9600 });
+const port = new SerialPort({path: 'COM14', baudRate: 9600 });
 const parser = port.pipe(new ReadlineParser());
 
 
